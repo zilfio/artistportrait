@@ -1,8 +1,8 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-alpine
 
 WORKDIR /app
-COPY ./target/artistportrait-0.0.1-SNAPSHOT.jar /app
+COPY target/artistportrait-*.jar /app/artistportrait.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "artistportrait-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "artistportrait.jar"]
