@@ -5,9 +5,8 @@ import it.pgart.artistportrait.service.exception.ArtistPortraitException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
-import static java.util.Calendar.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArtistPortraitServiceImplTest {
@@ -20,24 +19,20 @@ public class ArtistPortraitServiceImplTest {
     }
 
     @Test
-    public void testCalculate() throws ArtistPortraitException {
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(DAY_OF_MONTH, 1);
-        cal1.set(MONTH, MAY);
-        cal1.set(YEAR, 1947);
-        cal1.set(HOUR, 0);
-        cal1.set(MINUTE, 0);
-        cal1.set(SECOND, 0);
+    public void testCalculateSecondsAlive() throws ArtistPortraitException {
+        LocalDateTime birth = LocalDateTime.of(1947, 5, 1, 0, 0, 0);
+        LocalDateTime death = LocalDateTime.of(2015, 9, 12, 0, 0, 0);
 
-        Calendar cal2 = Calendar.getInstance();
-        cal2.set(DAY_OF_MONTH, 12);
-        cal2.set(MONTH, SEPTEMBER);
-        cal2.set(YEAR, 2015);
-        cal2.set(HOUR, 0);
-        cal2.set(MINUTE, 0);
-        cal2.set(SECOND, 0);
-
-        final long secondsAlive = artistPortraitService.calculateSecondsAlive(cal1.getTime(), cal2.getTime());
+        final long secondsAlive = artistPortraitService.calculateSecondsAlive(birth, death);
         assertThat(secondsAlive).isEqualTo(2157494400L);
+    }
+
+    @Test
+    public void testCalculateDaysAlive() throws ArtistPortraitException {
+        LocalDateTime birth = LocalDateTime.of(1947, 5, 1, 0, 0, 0);
+        LocalDateTime death = LocalDateTime.of(2015, 9, 12, 0, 0, 0);
+
+        final long secondsAlive = artistPortraitService.calculateDaysAlive(birth, death);
+        assertThat(secondsAlive).isEqualTo(24971L);
     }
 }

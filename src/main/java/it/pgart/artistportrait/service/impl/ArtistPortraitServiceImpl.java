@@ -4,62 +4,37 @@ import it.pgart.artistportrait.service.ArtistPortraitService;
 import it.pgart.artistportrait.service.exception.ArtistPortraitException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Slf4j
 public class ArtistPortraitServiceImpl implements ArtistPortraitService {
 
     @Override
-    public long calculateSecondsAlive(Date birth, Date death) throws ArtistPortraitException {
+    public long calculateSecondsAlive(LocalDateTime birth, LocalDateTime death) throws ArtistPortraitException {
         try {
-            Calendar cal1 = Calendar.getInstance();
-            cal1.setTime(birth);
-            cal1.set(Calendar.HOUR, 0);
-            cal1.set(Calendar.MINUTE, 0);
-            cal1.set(Calendar.SECOND, 0);
-            System.out.println("Birth: " + cal1.getTime());
-
-            Calendar cal2 = Calendar.getInstance();
-            cal2.setTime(death);
-            cal2.set(Calendar.HOUR, 0);
-            cal2.set(Calendar.MINUTE, 0);
-            cal2.set(Calendar.SECOND, 0);
-            System.out.println("Death: " + cal2.getTime());
-
-            long diff = cal2.getTimeInMillis() - cal1.getTimeInMillis();
-            log.info("Time difference in seconds: {}", TimeUnit.SECONDS.convert(diff, TimeUnit.MILLISECONDS));
-            return TimeUnit.SECONDS.convert(diff, TimeUnit.MILLISECONDS);
+            log.info("Birth: {}", birth);
+            log.info("Death: {}", death);
+            Duration duration = Duration.between(birth, death);
+            log.info("Difference: {} seconds", duration.toSeconds());
+            return duration.toSeconds();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new ArtistPortraitException("Error in execute", e);
+            throw new ArtistPortraitException("Error in calculateSecondsAlive", e);
         }
     }
 
     @Override
-    public long calculateDaysAlive(Date birth, Date death) throws ArtistPortraitException {
+    public long calculateDaysAlive(LocalDateTime birth, LocalDateTime death) throws ArtistPortraitException {
         try {
-            Calendar cal1 = Calendar.getInstance();
-            cal1.setTime(birth);
-            cal1.set(Calendar.HOUR, 0);
-            cal1.set(Calendar.MINUTE, 0);
-            cal1.set(Calendar.SECOND, 0);
-            System.out.println("Birth: " + cal1.getTime());
-
-            Calendar cal2 = Calendar.getInstance();
-            cal2.setTime(death);
-            cal2.set(Calendar.HOUR, 0);
-            cal2.set(Calendar.MINUTE, 0);
-            cal2.set(Calendar.SECOND, 0);
-            System.out.println("Death: " + cal2.getTime());
-
-            long diff = cal2.getTimeInMillis() - cal1.getTimeInMillis();
-            log.info("Time difference in days: {}", TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-            return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            log.info("Birth: {}", birth);
+            log.info("Death: {}", death);
+            Duration duration = Duration.between(birth, death);
+            log.info("Difference: {} days", duration.toDays());
+            return duration.toDays();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new ArtistPortraitException("Error in execute", e);
+            throw new ArtistPortraitException("Error in calculateDaysAlive", e);
         }
     }
 

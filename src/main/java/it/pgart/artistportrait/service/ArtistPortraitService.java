@@ -2,11 +2,11 @@ package it.pgart.artistportrait.service;
 
 import it.pgart.artistportrait.service.exception.ArtistPortraitException;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public interface ArtistPortraitService {
 
-    long calculateSecondsAlive(Date start, Date end) throws ArtistPortraitException;
+    long calculateSecondsAlive(LocalDateTime start, LocalDateTime end) throws ArtistPortraitException;
 
-    long calculateDaysAlive(Date birth, Date death) throws ArtistPortraitException;
+    long calculateDaysAlive(LocalDateTime birth, LocalDateTime death) throws ArtistPortraitException;
 }
