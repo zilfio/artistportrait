@@ -1,7 +1,19 @@
+version: 2.1
+
 jobs:
-  build:
+  build-and-test:
     docker:
       - image: cimg/openjdk:21.0.2
     steps:
-      - checkout
-      - run: mvn clean install
+      - checkout  # Clona il repository
+      - run:
+          name: Build
+          command: mvn clean package -DskipTests
+      - run:
+          name: Test
+          command: mvn test
+
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
