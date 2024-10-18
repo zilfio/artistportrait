@@ -3,6 +3,7 @@ package it.zilfio.artistportrait.service.impl;
 import it.zilfio.artistportrait.service.ArtistPortraitService;
 import it.zilfio.artistportrait.service.exception.ArtistPortraitException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class ArtistPortraitServiceImpl implements ArtistPortraitService {
 
     @Override
+    @Cacheable(value = "lifespanCache", key = "#birthDate.toString() + '-' + #deathDate.toString()")
     public long calculateSecondsAlive(LocalDateTime birthDate, LocalDateTime deathDate) throws ArtistPortraitException {
         try {
             // Verifica che la data di morte sia successiva a quella di nascita
